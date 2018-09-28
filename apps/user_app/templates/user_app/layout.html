@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+    <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/user_app/css/styles.css' %}" />
+</head>
+
+<body>
+    <div class="container">
+        {# include 'nav.html' #}
+        <div class="row">
+            <ul class="nav">
+                <li class="nav-item col-2">
+                    <span class="nav-link strong">Test App</span>
+                </li>
+                {% if request.session.user_level == 1 %}
+                <li class="nav-item col-1">
+                    <a class="nav-link" href="{% url 'dashboard:index' %}" title="Dashboard" class="button">Dashboard</a>
+                </li>
+                {% else %}
+                <li class="nav-item col-1">
+                    <a class="nav-link" href="{% url 'users:index' %}" class="button">Home</a>
+                </li>
+                {% endif %}
+                {% if request.session.logged_in != False %}
+                <li class="nav-item col-9 right">
+                    <span class="nav-link">Welcome {{ specific_user.first_name }} | <a href="{% url 'users:logout' %}" title="Logout">Logout</a></span>
+                </li>
+                {% else %}
+                <li class="nav-item col-9 right">
+                    <a class="nav-link" href="{% url 'users:signin' %}" title="Login" class="button">Sign in</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        {% block body %}{% endblock %}
+    </div>
+</body>
+
+</html>

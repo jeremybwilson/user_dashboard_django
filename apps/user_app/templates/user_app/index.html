@@ -1,0 +1,31 @@
+{% extends './layout.html' %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome To The Test</h1>
+            <p class="lead">We're going to build a cool application using an MVC framework! This application was built with Django in Seattle</p>
+            {% if request.session.user_level == 1 and request.session.login_status == 1 %}
+                <a class="btn btn-primary btn-sm" href="/dashboard">Start</a>
+            {% elif request.session.user_level != 1 and request.session.login_status == 1 %}
+                <a class="btn btn-primary btn-sm" href="/users/{{ specific_user.id }}/show">Welcome {{ specific_user.first_name }}</a>
+            {% else %}
+                <form action="{% url 'users:signin' %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-primary btn-sm" type="submit">Start</button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <h3>Manage Users</h3>
+            <p>Using this application, you'll learn how to add, remove and edit users for the application.</p>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <h3>Leave Messages</h3>
+            <p>Users will be able to leave a message to another user using the application.</p>
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <h3>Edit User Information</h3>
+            <p>Admins will be able to edit another user's information (email address, first name, last name, etc)</p>
+        </div>
+{% endblock %}

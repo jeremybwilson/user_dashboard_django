@@ -1,0 +1,52 @@
+h1, h2, h3, h4, h5, .nav, .customform {
+    width: 100%;
+}
+
+.header, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9 {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .customform .form-control {
+    /* width: auto; */
+}
+
+.form-group {
+    vertical-align: top;
+}
+
+.nav {
+    border-bottom: 2px solid black;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.comment {
+    margin-left: 1em;
+}
+
+.comment form {
+    margin-top: 10px;
+}
+
+label {
+    margin-bottom: 0;
+    padding: .375rem .75rem;
+}
+.right {
+    text-align: right;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.red, .messages {
+  color: red;
+}
+
+.blue {
+  color: blue;
+}

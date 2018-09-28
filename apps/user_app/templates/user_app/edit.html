@@ -1,0 +1,84 @@
+{% extends './layout.html' %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block body %}
+    {# include 'nav.html' #}
+        <div class="row">
+            <!-- Heading -->
+            {% if request.session.user_level == 1 %}
+            <h2>Manage Users</h2><br /><br />
+            <a href="{% url 'users:register' %}">Add New</a>
+            {% elif request.session.user_level == 2 %}
+            <h3>All Users</h3>
+            {% endif %}
+        </div>
+        {% for user in user_data %}
+        <div class="row">
+            <!-- Edit Information -->
+            <h2>Edit User #{{user.id}}</h2>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <form class="customform" action="/users/edit_users/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label><br />
+                        <input class="form-control" type="text" name="first_name" placeholder='{{user.first_name}}'>
+                        <label for="last_name">Last Name:</label><br />
+                        <input class="form-control" type="text" name="last_name" placeholder='{{user.last_name}}'>
+                        <label for="email">Email:</label><br />
+                        <input class="form-control" type="text" name="email" placeholder='{{user.email}}'>
+                        {% if request.session.user_level == 1 %}
+                        <label for="user_level">User Level:</label><br />
+                        <select name="user_level">
+                            <option value="1">Admin</option>
+                            <option value="2">Normal</option>
+                        </select>
+                        {% else %}
+                        <input type="hidden" name="user_level" value="{{user.user_level}}">
+                        {% endif %}
+                        <input type="hidden" name="id" value="{{user.id}}">
+                        <!-- <input type="submit" name="submit" value="Save"> -->
+                        <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Save">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <!-- Change Password -->
+                <h3>Change Password</h3>
+                <form action="/users/edit_users/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        Password:
+                        <br><input class="form-control" type="password" name="password">
+                        Password Confirmation:
+                        <br><input class="form-control" type="password" name="password_confirmation">
+                        <input type="hidden" name="id" value="{{user.id}}">
+                        <!-- <input type="submit" name="submit" value="Update Password"> -->
+                        <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Update Password">Update Password</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+        {% if request.session.user_id == user.id %}
+        <div class="row">
+            <!-- Edit Description -->
+            <h3>Edit Description</h3>
+        </div>
+        <div class="row">
+            <form action="/users/edit_users/" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="description" form='description' rows="8" cols="80">Edit Description </textarea>
+                    <input type="hidden" name="id" value="{{user.id}}">
+                    <!-- <input type="submit" name="submit" value="Edit Description"> -->
+                    <button class="btn btn-primary btn-sm" type="submit" name="submit" value="Edit Description">Edit Description</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}
