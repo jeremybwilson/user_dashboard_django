@@ -1,0 +1,45 @@
+{% extends './layout.html' %}
+{% block title %}Users Registration{% endblock %}
+
+{% block body %}
+        <div class="row">
+            <h3>Signin</h3>
+        </div>
+        <div class="row">
+            <form action="{% url 'users:login' %}" method="POST">
+                <div class="form-group">
+                {% csrf_token %}
+                    <label for="email">Email Address:</label>
+                    <input class="form-control" class="form-control" type="text" name="email" required>
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" name="password" required>
+                    <button class="btn btn-primary btn-sm" value="Login" type="submit" name="submit">Login</button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <!-- Shows validation errors -->
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class="row">
+            <a href="{% url 'users:register' %}">Don't have an account? Register</a>
+        </div>
+        <!-- <div class="row">
+            <form action="{% url 'users:login' %}" method="POST">
+                <div class="form-group">
+                {% csrf_token %}
+                    <label for="email">Email:</label>
+                    <input class="form-control" type="email" name="email" width="30">
+                    <label for="password">Password:</label>
+                    <input class="form-control" type="password" name="password" width="30">
+                    <button type="submit" class="btn btn-primary btn-sm">Login</button>
+                </div>
+            </form>
+        </div>   -->
+{% endblock %}
